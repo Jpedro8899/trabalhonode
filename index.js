@@ -46,23 +46,72 @@ app.get('/livro/:id', async function(req, res){
         res.send(livroselecionado)
     }
 })
-app.post('/autor', async function(req, res){
+app.post('/autor/', async function(req, res){
     const novoautor = await autor.autor.create({
-        nome = req.body.nome
+        nome : req.body.nome
     })
     res.send(novoautor)
 })
-app.post('/livro',  async function(req, res){
+app.post('/livro/',  async function(req, res){
     const novolivro = await livro.livro.create({
-        titulo = req.body.titulo,
-        autorid = req.body.autorid
+        titulo : req.body.titulo,
+        autorid : req.body.autorid
     })
     res.send(novolivro)
 })
+app.put('/autor/', async function(req, res){
+    const autoralterado = await autor.autor.update({
+        nome : req.body.nome
 
+    })
+    if(autoralterado == 0){
+        res.status(404).send({})
+        
+    }else{
+        res.send(autoralterado)
+    }
+})
+app.put('/livro/', async function(req, res){
+    const livroalterado = await livro.livro.update({
+        titulo : req.body.titulo,
+        autorid : req.body.autorid
+    })
+    if(livroalterado == 0){
+        res.status(404).send({})
+    }
+    else{
+        res.send(livroalterado)
+    }
+
+})
+app.delete('/autor/:id', async function(req, res){
+    const autorexcluido = await autor.autor.destroy({
+        where:{
+            id: req.params.id
+        }
+        
+    })
+    if(autorexcluido == 0){
+        res.status(404).send({})
+    }else{
+        res.status(204).send({})
+    }
+})
+
+app.delete('/livro/:id', async function(req, res){
+    const livroexcluido = await livro.livro.detroy({
+        where:{
+            id: req.params.id
+        }
+    })
+    if(livroexcluido == 0){
+        res.status(404).send({})
+    }else{
+        res.status(204).send({})
+    }
+})
 
 const PORTA = 3000
-app.listen(PORTA, req){
-    console.log('Servidor iniciando na porta'+PORTA)
-}
-    
+app.listen( PORTA, function(){
+    console.log("Servidor iniciados na porta "+PORTA);
+})
