@@ -7,7 +7,7 @@ const app = express()
 
 app.use(express.json)
 
-(function(req, res, next){
+app.use( function(req, res, next){
     res.setHeader('Acess-Control-Allow-Origin', '*')
     res.setHeader('Acess-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
     res.setHeader('Acess-Control-Allow-Null', '*')
@@ -16,6 +16,10 @@ app.use(express.json)
 
 banco.conexao.sync(function(){
     console.log('Banco de dados conectado com sucesso')
+})
+const PORTA = 3000
+app.listen( PORTA, function(){
+    console.log("Servidor iniciados na porta "+PORTA);
 })
 
 app.get('/autor/', async function(req, res){
@@ -59,14 +63,15 @@ app.post('/livro/',  async function(req, res){
     })
     res.send(novolivro)
 })
-app.put('/autor/', async function(req, res){
+app.put('/autor/:id', async function(req, res){
     const autoralterado = await autor.autor.update({
-        nome : req.body.nome
-
+        nome : req.body.nome,
+    },{
+        where:{id: req.params.id}
     })
     if(autoralterado == 0){
         res.status(404).send({})
-        
+
     }else{
         res.send(autoralterado)
     }
@@ -109,9 +114,4 @@ app.delete('/livro/:id', async function(req, res){
     }else{
         res.status(204).send({})
     }
-})
-
-const PORTA = 3000
-app.listen( PORTA, function(){
-    console.log("Servidor iniciados na porta "+PORTA);
 })
