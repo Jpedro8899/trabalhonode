@@ -5,32 +5,32 @@ const livro = require('./livro')
 
 const app = express()
 
-app.use(express.json)
+app.use(express.json())
 
 app.use( function(req, res, next){
-    res.setHeader('Acess-Control-Allow-Origin', '*')
-    res.setHeader('Acess-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
-    res.setHeader('Acess-Control-Allow-Null', '*')
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
+    res.setHeader('Access-Control-Allow-Headers', '*')
     next()
 })
 
 banco.conexao.sync(function(){
-    console.log('Banco de dados conectado com sucesso')
+    console.log("Banco de dados conectado com sucesso")
 })
 const PORTA = 3000
 app.listen( PORTA, function(){
-    console.log("Servidor iniciados na porta "+PORTA);
+    console.log("Servidor iniciado na porta "+PORTA);
 })
 
-app.get('/autor/', async function(req, res){
+app.get("/autor/", async function(req, res){
     const resultado = await autor.autor.findAll()
     res.send(resultado)
 })
-app.get('/livro/', async function(req, res){
-    const resultado = await livro.livro.findALL()
+app.get("/livro/", async function(req, res){
+    const resultado = await livro.livro.findAll()
     res.send(resultado)
 })
-app.get('/autor/:id', async function(req, res){
+app.get("/autor/:id", async function(req, res){
     const autorselecionado = await autor.autor.findByPk(req.params.id,
         {include : {model: livro.livro}}
     )
@@ -40,7 +40,7 @@ app.get('/autor/:id', async function(req, res){
         res.send(autorselecionado)
     }
 })
-app.get('/livro/:id', async function(req, res){
+app.get("/livro/:id", async function(req, res){
     const livroselecionado = await livro.livro.findByPk(req.params.id,
     {include: {model: autor.autor}}
     )
@@ -50,22 +50,22 @@ app.get('/livro/:id', async function(req, res){
         res.send(livroselecionado)
     }
 })
-app.post('/autor/', async function(req, res){
+app.post("/autor/", async function(req, res){
     const novoautor = await autor.autor.create({
         nome : req.body.nome
     })
     res.send(novoautor)
 })
-app.post('/livro/',  async function(req, res){
+app.post("/livro/",  async function(req, res){
     const novolivro = await livro.livro.create({
         titulo : req.body.titulo,
         autorid : req.body.autorid
     })
     res.send(novolivro)
 })
-app.put('/autor/:id', async function(req, res){
+app.put("/autor/:id", async function(req, res){
     const autoralterado = await autor.autor.update({
-        nome : req.body.nome,
+        nome : req.body.nome
     },{
         where:{id: req.params.id}
     })
@@ -73,10 +73,10 @@ app.put('/autor/:id', async function(req, res){
         res.status(404).send({})
 
     }else{
-        res.send(autoralterado)
+        res.send(await autor.autor.findByPk(req.params.id))
     }
 })
-app.put('/livro/', async function(req, res){
+app.put("/livro/", async function(req, res){
     const livroalterado = await livro.livro.update({
         titulo : req.body.titulo,
         autorid : req.body.autorid
@@ -85,11 +85,11 @@ app.put('/livro/', async function(req, res){
         res.status(404).send({})
     }
     else{
-        res.send(livroalterado)
+        res.send(await materia.materia.findByPk(req.params.id))
     }
 
 })
-app.delete('/autor/:id', async function(req, res){
+app.delete("/autor/:id", async function(req, res){
     const autorexcluido = await autor.autor.destroy({
         where:{
             id: req.params.id
@@ -103,7 +103,7 @@ app.delete('/autor/:id', async function(req, res){
     }
 })
 
-app.delete('/livro/:id', async function(req, res){
+app.delete("/livro/:id", async function(req, res){
     const livroexcluido = await livro.livro.detroy({
         where:{
             id: req.params.id
