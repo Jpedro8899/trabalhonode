@@ -1,7 +1,7 @@
 const express = require ('express')
 const banco = require('./banco')
-const autor = require('./autor')
-const livro = require('./livro')
+const autors = require('./autor')
+const livros = require('./livro')
 
 const app = express()
 
@@ -22,17 +22,17 @@ app.listen( PORTA, function(){
     console.log("Servidor iniciado na porta "+PORTA);
 })
 
-app.get("/autor/", async function(req, res){
-    const resultado = await autor.autor.findAll()
+app.get("/autors/", async function(req, res){
+    const resultado = await autors.autors.findAll()
     res.send(resultado)
 })
-app.get("/livro/", async function(req, res){
-    const resultado = await livro.livro.findAll()
+app.get("/livros/", async function(req, res){
+    const resultado = await livros.livros.findAll()
     res.send(resultado)
 })
-app.get("/autor/:id", async function(req, res){
-    const autorselecionado = await autor.autor.findByPk(req.params.id,
-        {include : {model: livro.livro}}
+app.get("/autors/:id", async function(req, res){
+    const autorselecionado = await autors.autors.findByPk(req.params.id,
+        {include : {model: livros.livros}}
     )
     if(autorselecionado == null){
         res.status(404).send({})
@@ -40,9 +40,9 @@ app.get("/autor/:id", async function(req, res){
         res.send(autorselecionado)
     }
 })
-app.get("/livro/:id", async function(req, res){
-    const livroselecionado = await livro.livro.findByPk(req.params.id,
-    {include: {model: autor.autor}}
+app.get("/livros/:id", async function(req, res){
+    const livroselecionado = await livros.livros.findByPk(req.params.id,
+    {include: {model: autors.autors}}
     )
     if(livroselecionado == null){
         res.status(404).send({})
@@ -50,21 +50,29 @@ app.get("/livro/:id", async function(req, res){
         res.send(livroselecionado)
     }
 })
-app.post("/autor/", async function(req, res){
-    const novoautor = await autor.autor.create({
+app.post("/autors/", async function(req, res){
+    const novoautor = await autors.autors.create({
         nome : req.body.nome
     })
     res.send(novoautor)
 })
-app.post("/livro/",  async function(req, res){
-    const novolivro = await livro.livro.create({
+/*app.post("/autor/:id", async function(req, res){
+    const novoautor = await autor.autor.create({
+        id: req.body.id,
+        nome : req.body.nome
+    })
+    res.send(novoautor)
+})*/
+
+app.post("/livros/",  async function(req, res){
+    const novolivro = await livros.livros.create({
         titulo : req.body.titulo,
-        autorid : req.body.autorid
+        autorId : req.body.autorId
     })
     res.send(novolivro)
 })
-app.put("/autor/:id", async function(req, res){
-    const autoralterado = await autor.autor.update({
+app.put("/autors/:id", async function(req, res){
+    const autoralterado = await autors.autors.update({
         nome : req.body.nome
     },{
         where:{id: req.params.id}
@@ -73,24 +81,26 @@ app.put("/autor/:id", async function(req, res){
         res.status(404).send({})
 
     }else{
-        res.send(await autor.autor.findByPk(req.params.id))
+        res.send(await autors.autors.findByPk(req.params.id))
     }
 })
-app.put("/livro/", async function(req, res){
-    const livroalterado = await livro.livro.update({
+
+app.put("/livros/:autorId", async function(req, res){
+    const livroalterado = await livros.livros.update({
         titulo : req.body.titulo,
-        autorid : req.body.autorid
-    })
+        autorId : req.body.autorId
+    },{   where:{autorId: req.params.autorId}
+})
     if(livroalterado == 0){
         res.status(404).send({})
     }
     else{
-        res.send(await materia.materia.findByPk(req.params.id))
+        res.send(await livros.livros.findByPk(req.params.autorId))
     }
 
 })
-app.delete("/autor/:id", async function(req, res){
-    const autorexcluido = await autor.autor.destroy({
+app.delete("/autors/:id", async function(req, res){
+    const autorexcluido = await autors.autors.destroy({
         where:{
             id: req.params.id
         }
@@ -103,8 +113,8 @@ app.delete("/autor/:id", async function(req, res){
     }
 })
 
-app.delete("/livro/:id", async function(req, res){
-    const livroexcluido = await livro.livro.detroy({
+app.delete("/livros/:id", async function(req, res){
+    const livroexcluido = await livros.livros.destroy({
         where:{
             id: req.params.id
         }
@@ -114,4 +124,11 @@ app.delete("/livro/:id", async function(req, res){
     }else{
         res.status(204).send({})
     }
+})
+
+app.get("/nome/titulo/:titulo", async function(req, res){
+    const puxartudo = await nome.nome.findAll({
+        where:{titulo: req.params.titulo},
+        include:{model:titulo.titulo}
+    })
 })

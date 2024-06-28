@@ -1,9 +1,9 @@
 const sequelize = require('sequelize')
 const banco = require('./banco')
-const autor =  require('./autor')
+const autors =  require('./autor')
 
-var livro = banco.conexao.define (
-    "livro",
+var livros = banco.conexao.define (
+    "livros",
     {
     id:{
         type: sequelize.INTEGER.UNSIGNED,
@@ -19,4 +19,4 @@ var livro = banco.conexao.define (
     {timestamps:false}
 )
 
-module.exports = {livro}
+module.exports = {livros}

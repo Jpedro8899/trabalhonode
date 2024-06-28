@@ -1,9 +1,9 @@
 const sequelize = require('sequelize')
 const banco = require('./banco')
-const livro = require('./livro')
+const livros = require('./livro')
 
-var autor = banco.conexao.define(
-    "autor",
+var autors = banco.conexao.define(
+    "autors",
     {
         id:{
             type: sequelize.INTEGER.UNSIGNED,
@@ -20,7 +20,7 @@ var autor = banco.conexao.define(
     },
     {timestamps:false}
 )
-autor.hasMany(livro.livro)
-livro.livro.belongsTo(autor)
+autors.hasMany(livros.livros)
+livros.livros.belongsTo(autors)
 
-module.exports = {autor}
+module.exports = {autors}
