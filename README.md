@@ -41,30 +41,40 @@ Retorna uma lista de todos os autores.
 ```sh
 http://localhost:3000/autors/
 ```
+![image](https://github.com/Jpedro8899/trabalhonode/assets/160235276/350601f9-a262-4aac-b3bb-ed1af86738b5)
+
 
 #### GET /autors/:id
 Retorna detalhes de um autor específico, incluindo seus livros.
 ```sh
 http://localhost:3000/autors/1
 ```
+![image](https://github.com/Jpedro8899/trabalhonode/assets/160235276/0d7e569f-9489-4f70-b852-ab1e900e27bb)
+
 
 #### POST /autors/
 Cria um novo autor.
 ```sh
 http://localhost:3000/autors/ |"json"|  '{"nome": "Nome do Autor"}'
 ```
+![image](https://github.com/Jpedro8899/trabalhonode/assets/160235276/4abad67c-67f4-4118-8ef1-f1fe862abc79)
+
 
 #### PUT /autors/:id
 Atualiza as informações de um autor existente.
 ```sh
 http://localhost:3000/autors/1 |"json"| '{"nome": "Novo Nome"}'
 ```
+![image](https://github.com/Jpedro8899/trabalhonode/assets/160235276/1a99b8eb-4ee1-485a-bea1-268c407a5349)
+
 
 #### DELETE /autors/:id
 Exclui um autor.
 ```sh
 http://localhost:3000/autors/1
 ```
+![image](https://github.com/Jpedro8899/trabalhonode/assets/160235276/4abd93f2-8616-4ab6-9f55-4245b9483a4a)
+
 
 ### Livros
 
@@ -73,30 +83,40 @@ Retorna uma lista de todos os livros.
 ```sh
 http://localhost:3000/livros/
 ```
+![image](https://github.com/Jpedro8899/trabalhonode/assets/160235276/82eb783f-fd55-418e-a440-80ce82bc9f9f)
+
 
 #### GET /livros/:id
 Retorna detalhes de um livro específico, incluindo o autor.
 ```sh
 http://localhost:3000/livros/1
 ```
+![image](https://github.com/Jpedro8899/trabalhonode/assets/160235276/71dc5223-c661-4267-9ceb-c0c24d96e192)
+
 
 #### POST /livros/
 Cria um novo livro.
 ```sh
 http://localhost:3000/livros/ |"json"| '{"titulo": "Título do Livro", "autorId": 1}'
 ```
+![image](https://github.com/Jpedro8899/trabalhonode/assets/160235276/85697914-da05-45fb-856e-a26bbb267cb6)
+
 
 #### PUT /livros/:autorId
 Atualiza as informações de um livro existente.
 ```sh
 http://localhost:3000/livros/1 |"json"| '{"titulo": "Novo Título", "autorId": 1}'
 ```
+![image](https://github.com/Jpedro8899/trabalhonode/assets/160235276/5396d486-4b45-4540-8ead-6492c3bd764a)
+
 
 #### DELETE /livros/:id
 Exclui um livro.
 ```sh
 http://localhost:3000/livros/1
 ```
+![image](https://github.com/Jpedro8899/trabalhonode/assets/160235276/1cdefb70-f78d-496f-bad0-d7b2a3d97634)
+
 
 ## Descrição dos Métodos
 
