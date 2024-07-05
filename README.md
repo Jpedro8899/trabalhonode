@@ -1,3 +1,5 @@
+DUPLA: Vinícius Zandonai e João P. T. Florêncio
+
 # trabalhonode
 Aqui está o texto `README.md` para um repositório GitHub explicando o código fornecido. O código estabelece uma relação 1 para N entre autores e livros usando Node.js, Express, e Sequelize para interagir com um banco de dados.
 
